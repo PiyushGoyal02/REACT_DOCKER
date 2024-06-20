@@ -12,6 +12,7 @@ COPY . .
 
 RUN npm run build
 
+
 # Serve with nginx
 FROM nginx:1.23-alpine
 
@@ -19,9 +20,9 @@ WORKDIR /usr/share/nginx/html
 
 RUN rm -rf *
 
-COPY --from=build-stage /app/build .
+COPY --from=build-stage /app/build /usr/share/nginx/html
 
 EXPOSE 80
 
-ENTRYPOINT [ "nginx", "-g", "doemon" ]
+ENTRYPOINT [ "nginx", "-g", "doemon off;" ]
 
