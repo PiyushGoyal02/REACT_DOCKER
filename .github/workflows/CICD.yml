@@ -13,7 +13,7 @@ jobs:
             - name: Login to docker hub
               run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
             - name: Build Docker Image
-              run: docker build -t ${{secrets.DOCKER_USERNAME}}/reactjs_app .
+              run: docker build -t goyalbites/reactjs_app .
             - name: Publish Images to docker hub
               run: docker push goyalbites/reactjs_app:latest
 
