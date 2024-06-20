@@ -20,7 +20,7 @@ WORKDIR /usr/share/nginx/html
 
 RUN rm -rf *
 
-COPY --from=build-stage /app/build /usr/share/nginx/html
+COPY --from=build-stage /app/ /usr/share/nginx/html
 
 EXPOSE 80
 
