@@ -13,17 +13,18 @@ jobs:
             - name: Login to docker hub
               run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
             - name: Build Docker Image
-              run: docker build -t goyalbites/reactjs_app --build-arg REACT_APP_NODE_ENV='production' --build-arg REACT_APP_SERVER_BASE_URL='${{ secrets.REACT_APP_SERVER_BASE_URL }}' .
+              run: docker build -t goyalbites/reactjs-app --build-arg REACT_APP_NODE_ENV='production' --build-arg REACT_APP_SERVER_BASE_URL='${{ secrets.REACT_APP_SERVER_BASE_URL }}'  .
+            #   run: docker build -t goyalbites/reactjs-app --build-arg REACT_APP_NODE_ENV='production' --build-arg REACT_APP_SERVER_BASE_URL='${{ secrets.REACT_APP_SERVER_BASE_URL }}' .
             - name: Publish Images to docker hub
-              run: docker push goyalbites/reactjs_app:latest
+              run: docker push goyalbites/reactjs-app:latest
 
     deploy:
         needs: build 
         runs-on: self-hosted
         steps:
             - name: Pull Image from Docker Hub
-              run: docker pull goyalbites/reactjs_app:latest
+              run: docker pull goyalbites/reactjs-app:latest
             - name: Delete Old Container
               run: docker rm -f reactjs-app-container
             - name: Run Docker Container
-              run: docker run -d -p 3000:80 --name reactjs-app-container goyalbites/reactjs_app
+              run: docker run -d -p 3000:80 --name reactjs-app-container goyalbites/reactjs-app
