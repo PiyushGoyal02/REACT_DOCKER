@@ -27,10 +27,10 @@ RUN npm run build
 # ENTRYPOINT [ "nginx", "-g", "doemon off;" ]
 
 
-FROM nginx:1.24-alpine3
+FROM nginx:1.23-alpine
 WORKDIR /usr/share/nginx/html
 RUN rm -rf *
-# COPY --from=build-stage /app/build /usr/share/nginx/html
+COPY --from=build /app/build .
 EXPOSE 80
 ENTRYPOINT [ "nginx", "-g", "daemon off;" ]
 
