@@ -27,7 +27,7 @@ RUN npm run build
 # ENTRYPOINT [ "nginx", "-g", "doemon off;" ]
 
 
-FROM nginx:1.23-alpine
+FROM nginx:1.24-alpine3
 WORKDIR /usr/share/nginx/html
 RUN rm -rf *
 COPY --from=build-stage /app/build /usr/share/nginx/html
