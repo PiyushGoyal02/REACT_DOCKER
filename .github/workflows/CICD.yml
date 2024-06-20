@@ -1,0 +1,27 @@
+name: Deploy React Application
+
+on:
+    push:
+        branches: ["main"]
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - name: CheckOut Sourse Code
+              uses: actions/checkout@v4
+            - name: Login to docker hub
+              run: docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_PASSWORD}}
+            - name: Build Docker Image
+              run: docker build -t goyalbites/reactjs_app .
+            - name: Publish Images to docker hub
+              run: docker push goyalbites/reactjs_app:latest
+
+    deploy:
+        needs: build 
+        runs-on: self-hosted
+        steps:
+            - name: Pull Image from Docker Hub
+              run: docker pull goyalbites/reactjs_app:latest
+            - name: Run Docker Container
+              run: docker run -d -p 3000:80 --name reactjs-app-container goyalbites/reactjs_app
